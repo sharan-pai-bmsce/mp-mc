@@ -1,7 +1,7 @@
 .model small
 .data
-a db 2
-b db 4
+a db 20
+b db 12
 c db ?
 
 .code
