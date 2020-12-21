@@ -1,0 +1,59 @@
+.MODEL SMALL
+DISP MACRO MSG
+LEA DX,MSG
+MOV AH,09H
+INT 21H
+ENDM
+
+.DATA
+ROW DB 02 DUP(0)
+COL DB 02 DUP(0)
+MSG1 DB 0DH,0AH,"ENTER THE X CO-ORDINATE: $"
+MSG2 DB 0DH,0AH,"ENTER THE Y CO-ORDINATE: $"
+
+.CODE
+MOV AX,@DATA
+MOV DS,AX
+DISP MSG1
+LEA SI,ROW
+CALL READ
+DISP MSG2
+LEA SI,COL
+CALL READ
+LEA SI,ROW
+call convert
+mov dl,al
+lea si,col
+call convert
+mov dh,al
+MOV AH,00H
+MOV AL,03H
+INT 10H
+MOV AH,02H
+INT 10H
+JMP FINAL
+convert proc near
+
+mov ah,[si]
+inc si
+mov al,[si]
+sub ax,3030h
+aad
+ret
+convert endp
+
+READ PROC NEAR
+
+MOV CX,02H
+L1:MOV AH,01H
+        INT 21H
+        MOV [SI],AL
+        INC SI
+        LOOP L1
+RET
+read endp
+FINAL:MOV AH,01H
+      INT 21H 
+      MOV AH,4CH
+      INT 21H
+END
