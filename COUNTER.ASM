@@ -1,13 +1,17 @@
 .model small
 .code
+;Setting the counter
 mov cl,00h
+;Setting to video mode (Editing mode)
 mov ah,00h
 mov al,03h
 int 10h
 
-loop1:mov bh,00h
-mov dh,00h
-mov dl,00h
+loop1:
+;Setting the position of the cursor
+mov bh,00h ;Gives Page number
+mov dh,00h ;Gives x co ordinate
+mov dl,00h ; Gives y co ordinate
 mov ah,02h
 int 10h
 
